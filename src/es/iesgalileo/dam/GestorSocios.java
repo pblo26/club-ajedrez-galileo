@@ -1,6 +1,8 @@
 package es.iesgalileo.dam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /*
@@ -45,20 +47,44 @@ import java.util.Scanner;
 public class GestorSocios {
 
 	public static void main(String[] args) {
+		
 		//
 		/*	pseudocodigo:
 		 * 	dar alta socios -> consultar/buscar -> calcular estadisticas -> sortear -> mostrar informe
 		 */
 		
-		// instancia de arraylist tipo string vacio
-		
-		ArrayList<String> listaSocios = new ArrayList<>();
-		
 		Scanner teclado = new Scanner(System.in);
+				
+		ArrayList<String> listaSocios = new ArrayList<>();
+		ArrayList<LocalDate> listaFechas = new ArrayList<>();
+		
+		StringBuilder informe1 = new StringBuilder("_-_-_-Club Ajedrez-_-_-_\n");
+		StringBuilder informe2 = new StringBuilder(200);
+				
+		Random azarReal = new Random();
+		Random azar = new Random(42);
 		
 		
+		listaSocios.add("Ross Ulbritch");
+		listaFechas.add(LocalDate.of(2000, 10, 11));
+
+		listaSocios.add("Walter White");
+		listaFechas.add(LocalDate.of(1999, 6, 9));
 		
-		System.out.println("club ajedrez galileo - listado socios");
+		listaSocios.add("Antonio Escohotado");
+		listaFechas.add(LocalDate.of(1998, 6, 7));
+		
+		listaSocios.add("Jhon McAfee");
+		listaFechas.add(LocalDate.of(1997, 2, 28));
+
+		listaSocios.add("Linus Torvals");
+		listaFechas.add(LocalDate.of(1996, 12, 12));
+		
+			
+		System.out.println("Existen: " + listaSocios.size() + " socios registrados.");
+		
+		
+		System.out.println("_-_-_-Club Ajedrez-_-_-_-Listado Socios-_-_-_");
 		
 		teclado.close();
 		
