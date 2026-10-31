@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Optional;
 
 /*
  * 
@@ -46,6 +47,38 @@ import java.util.Scanner;
 
 public class GestorSocios {
 
+	public static Optional<Integer> buscarSocio(String nombre, ArrayList<String> listaSocios){
+		
+		int indice = listaSocios.indexOf(nombre);
+		if (indice == -1) {
+			return Optional.empty();
+			
+		} else {
+			return Optional.of(indice);
+		}
+		
+	}
+	
+	public static void esSocio(String nombreBuscado, ArrayList<String> listaSocios, ArrayList<LocalDate> listaFechas) {
+		
+		Optional<Integer> resultadoBusqueda = buscarSocio(nombreBuscado, listaSocios);
+		
+		if (resultadoBusqueda.isPresent()) {
+			
+			int posicion = resultadoBusqueda.get();
+			String nombre = listaSocios.get(posicion);
+			LocalDate fechaNacimiento = listaFechas.get(posicion);
+			
+			int ano = fechaNacimiento.getYear();
+			var mes = fechaNacimiento.getMonth();
+			
+			System.out.println("<:) Socio encontrado: " + nombre + " | Nacido/a en el mes de " + mes + ", del año: " + ano);
+		} else {
+			System.out.println(">:( Socio no encontrado a nombre de: '" + nombreBuscado + "'");
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		
 		//
@@ -64,6 +97,8 @@ public class GestorSocios {
 		Random azarReal = new Random();
 		Random azar = new Random(42);
 		
+		String socioExiste = "Walter White";
+		String socioNoExiste = "Skyler White";
 		
 		listaSocios.add("Ross Ulbritch");
 		listaFechas.add(LocalDate.of(2000, 10, 11));
@@ -83,6 +118,8 @@ public class GestorSocios {
 			
 		System.out.println("Existen: " + listaSocios.size() + " socios registrados.");
 		
+		esSocio(socioExiste, listaSocios, listaFechas);
+		esSocio(socioNoExiste, listaSocios, listaFechas);
 		
 		System.out.println("_-_-_-Club Ajedrez-_-_-_-Listado Socios-_-_-_");
 		
