@@ -72,9 +72,9 @@ public class GestorSocios {
 			int ano = fechaNacimiento.getYear();
 			var mes = fechaNacimiento.getMonth();
 			
-			System.out.println("<:) Socio encontrado: " + nombre + " | Nacido/a en el mes de " + mes + ", del año: " + ano);
+			System.out.println("<:) Socio encontrado: " + nombre + " | Nacido en el mes de " + mes + ", del año: " + ano);
 		} else {
-			System.out.println(">:( Socio no encontrado a nombre de: '" + nombreBuscado + "'");
+			System.out.println(">:( Socio no encontrado a nombre de: " + nombreBuscado);
 		}
 		
 	}
@@ -100,6 +100,16 @@ public class GestorSocios {
 		String socioExiste = "Walter White";
 		String socioNoExiste = "Skyler White";
 		
+		int anoActual = LocalDate.now().getYear();
+		int sumaEdades = 0;
+		
+		int indiceMayor = 0;
+		int indiceMenor = 0;
+		
+		int edadMaxima = Integer.MIN_VALUE;
+		int edadMinima = Integer.MAX_VALUE;
+		
+		
 		listaSocios.add("Ross Ulbritch");
 		listaFechas.add(LocalDate.of(2000, 10, 11));
 
@@ -115,11 +125,47 @@ public class GestorSocios {
 		listaSocios.add("Linus Torvals");
 		listaFechas.add(LocalDate.of(1996, 12, 12));
 		
+		for (int i = 0; i < listaSocios.size(); i++) {
+			
+			LocalDate fechaNacimiento = listaFechas.get(i);
+			int edadSocio = anoActual - fechaNacimiento.getYear();
+			sumaEdades += edadSocio;
+			
+			edadMaxima = Math.max(edadMaxima, edadSocio);
+			edadMinima = Math.min(edadMinima, edadSocio);
+			
+			if (fechaNacimiento.isBefore(listaFechas.get(indiceMayor))) {
+				indiceMayor = i;
+			}
+			
+			if (fechaNacimiento.isAfter(listaFechas.get(indiceMenor))) {
+				indiceMenor = i;
+			}
+		}
+		
+		/*
+		 * Metodos estaticos VS metodos de instancia
+		 * 
+		 * Estatico: ej. Math.round(mediaExacta)
+		 * Es estatico porque ni instancia nada y el resultado depende solo de la entrada que le pases.
+		 * 
+		 * Instanciado:
+		 * Sin embargo el instanciado ejemplo del "if (fechaNacimiento.isBefore...)", ahí necesita revisar
+		 * dentro de los datos del objeto para poder devolver la salida, así que es instanciado.
+		 */
+		
+		double mediaExacta = (double) sumaEdades / listaSocios.size();
+		long edadMediaRedondeada = Math.round(mediaExacta);
+		
 			
 		System.out.println("Existen: " + listaSocios.size() + " socios registrados.");
 		
 		esSocio(socioExiste, listaSocios, listaFechas);
 		esSocio(socioNoExiste, listaSocios, listaFechas);
+		
+		System.out.println("Edad media del club: " + edadMediaRedondeada);
+		System.out.println("Socio con más edad: " + listaSocios.get(indiceMayor));
+		System.out.println("Socio con menor edad: " + listaSocios.get(indiceMenor));
 		
 		System.out.println("_-_-_-Club Ajedrez-_-_-_-Listado Socios-_-_-_");
 		
