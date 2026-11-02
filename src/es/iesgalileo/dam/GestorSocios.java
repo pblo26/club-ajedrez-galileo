@@ -1,6 +1,7 @@
 package es.iesgalileo.dam;
 
 import java.time.LocalDate;
+import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -157,6 +158,41 @@ public class GestorSocios {
 		double mediaExacta = (double) sumaEdades / listaSocios.size();
 		long edadMediaRedondeada = Math.round(mediaExacta);
 		
+		int indiceGanador = azarReal.nextInt(listaSocios.size());
+		String socioGanador = listaSocios.get(indiceGanador);
+		
+		/*
+		 * Usamos librearias externas como apache commons lang para poder hacer cosas que por defecto,
+		 * no se podrian hacer en java sin librerias externas. Un ejemplo es:
+		 * StringUtils.upperCase()/StringUtils.capitalize()
+		 * O para cosas que sin estas librerias sería menos seguro de hacer y más tedioso
+		 */
+		
+		String ganadorFormateado = StringUtils.capitalize(socioGanador);
+		
+		informe1.append("\n=========================================\n");
+		informe1.append("       RESUMEN DEL CLUB DE AJEDREZ       \n");
+		informe1.append("=========================================\n");
+		informe1.append(" Listado de Socios (Total: ").append(listaSocios.size()).append("):\n");
+
+		for (int i = 0; i < listaSocios.size(); i++) {
+		    LocalDate fNac = listaFechas.get(i);
+		    int edad = anoActual - fNac.getYear();
+		    
+		    informe1.append(" - ").append(listaSocios.get(i)).append(" (Nacido/a el ").append(fNac).append(" | Edad: ").append(edad).append(" años)\n");
+		}
+
+		informe1.append("\n ESTADÍSTICAS DEL CLUB:\n");
+		informe1.append(" - Edad media: ").append(edadMediaRedondeada).append(" años\n");
+		informe1.append(" - Socio de mayor edad: ").append(listaSocios.get(indiceMayor)).append("\n");
+		informe1.append(" - Socio de menor edad: ").append(listaSocios.get(indiceMenor)).append("\n");
+
+		informe1.append("\n RESULTADO DEL SORTEO:\n");
+		informe1.append(" - El socio premiado es: ").append(ganadorFormateado).append("!\n");
+		informe1.append("=========================================\n");
+
+		
+		System.out.println(informe1.toString());
 			
 		System.out.println("Existen: " + listaSocios.size() + " socios registrados.");
 		
